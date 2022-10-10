@@ -1,0 +1,28 @@
+name: Install Pact Standalone
+description: Installs the Pact standalone tooling and updates the environment so the tools are available in \$PATH
+inputs:
+  version:
+    description: Standalone tooling version to use
+    default: 1.91.0
+  shasum:
+    description: SHA checksum of the standalone tooling package
+    default: 9b745949f5f795d690941d6bf85444af325f248b
+runs:
+  using: composite
+  steps:
+    - name: Download standalone archive
+      shell: bash
+      run: |
+        curl -L -o /tmp/pact.tar.gz https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v${{ inputs.version }}/pact-${{ inputs.version }}-linux-x86_64.tar.gz
+    - name: Verify checksum
+      shell: bash
+      run: echo "${{ inputs.shasum }}  /tmp/pact.tar.gz" | shasum -c -
+    - name: Unpack standalone archive
+      shell: bash
+      run: tar -C /opt -xvzf /tmp/pact.tar.gz
+    - name: Update PATH
+      shell: bash
+      run: echo "/opt/pact/bin" >> ${GITHUB_PATH}
+    - name: Clean up download
+      shell: bash
+      run: rm /tmp/pact.tar.gz
