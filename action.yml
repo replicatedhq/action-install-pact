@@ -3,10 +3,10 @@ description: Installs the Pact standalone tooling and updates the environment so
 inputs:
   version:
     description: Standalone tooling version to use
-    default: 1.91.0
+    default: 2.0.0
   shasum:
     description: SHA checksum of the standalone tooling package
-    default: 9b745949f5f795d690941d6bf85444af325f248b
+    default: 94ea52ef7d6c9dacf431dde7138717d96714131a
 runs:
   using: composite
   steps:
